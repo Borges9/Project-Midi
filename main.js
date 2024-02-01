@@ -1,53 +1,34 @@
-function playSomPom () {
-    document.querySelector('#som_tecla_pom').play();
-}
+function tocaSom (seletorAudio) {
+    const element = document.querySelector(seletorAudio);
 
-document.querySelector('.tecla_pom').onclick =  playSomPom;
+    if(element && element.localName === 'audio'){
+        element.play();
+    }
+    else {
+        console.log('Elemento não encontrado ou seletor inválido.');
+    };
+};
 
-function playSomClap () {
-    document.querySelector('#som_tecla_clap').play();
-}
+const listaDeTeclados = document.querySelectorAll('.tecla');
 
-document.querySelector('.tecla_clap').onclick =  playSomClap;
+for(let contador = 0; contador < listaDeTeclados.length; contador++){
 
-function playSomTim () {
-    document.querySelector('#som_tecla_tim').play();
-}
+    const tecla = listaDeTeclados[contador];
+    const instrumento = tecla.classList[1];
+    const idAudio = `#som_${instrumento}`;
 
-document.querySelector('.tecla_tim').onclick =  playSomTim;
+    tecla.onclick = function () {
+        tocaSom(idAudio);
+    };
 
-function playSomPuff () {
-    document.querySelector('#som_tecla_puff').play();
-}
+    tecla.onkeydown = function (evento) {
 
-document.querySelector('.tecla_puff').onclick =  playSomPuff;
+        if(evento.code === 'Space' || evento.code === 'Enter'){
+            tecla.classList.add('ativa');
+        };
+    };
 
-function playSomSplash () {
-    document.querySelector('#som_tecla_splash').play();
-}
-
-document.querySelector('.tecla_splash').onclick =  playSomSplash;
-
-function playSomToim () {
-    document.querySelector('#som_tecla_toim').play();
-}
-
-document.querySelector('.tecla_toim').onclick =  playSomToim;
-
-function playSomTPsh () {
-    document.querySelector('#som_tecla_psh').play();
-}
-
-document.querySelector('.tecla_psh').onclick =  playSomTPsh;
-
-function playSomTic () {
-    document.querySelector('#som_tecla_tic').play();
-}
-
-document.querySelector('.tecla_tic').onclick =  playSomTic;
-
-function playSomTom () {
-    document.querySelector('#som_tecla_tom').play();
-}
-
-document.querySelector('.tecla_tom').onclick =  playSomTom;
+    tecla.onkeyup = function () {
+        tecla.classList.remove('ativa');
+    };
+};
